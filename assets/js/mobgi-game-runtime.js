@@ -1,0 +1,1 @@
+function backToHome(){window.location.href=window.location.origin;}

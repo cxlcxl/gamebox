@@ -1,0 +1,61 @@
+{{ template "header" . }}
+{{ template "menu" . }}
+
+<section class="content-main-w3" id="home">
+
+  <div class="logo-wthree text-center">
+    <a class="navbar-brand" href="#">
+      {{.game.Name}}<!-- <span> Make Memories</span>-->
+    </a>
+  </div>
+
+  <div class="container-fluid gallery-lightbox my-4">
+    <div class="row m-2">
+      <div class="col-lg-6 col-md-8 col-sm-12 col-12 p-0 snap-img">
+        <div class="gallery_effect game-detail-ad-bg">
+          <div class="game-detail-icon">
+            <img src="{{ .game.Icon }}" alt=" ">
+          </div>
+          <!-- TODO 广告位 -->
+
+          <div class="game-play"><a href="/play-trans?gid={{.game.GameId}}">PLAY NOW</a></div>
+        </div>
+      </div>
+
+
+      <div class="col-lg-3 col-md-2 p-0 snap-img">
+        <!-- TODO 广告位 -->
+      </div>
+
+      <div class="col-lg-3 col-md-2 p-0 snap-img">
+        <!-- TODO 广告位 -->
+      </div>
+    </div>
+
+    <div class="row m-0">
+      {{range $idx, $game := .games}}
+      <div class="col-lg-1 col-md-2 col-sm-3 col-4 p-0 snap-img">
+        <div class="gallery_grid1 hover08" data-aos="fade-up">
+          <div class="gallery_effect">
+            <a href="/game?gid={{ $game.GameId }}" data-lightbox="example-set"
+               data-title-wthree="{{ $game.Description }}">
+              <figure><img src="{{ $game.Icon }}" alt=" " class="img-fluid"></figure>
+            </a>
+            <div class="game_name">{{$game.Name}}</div>
+          </div>
+        </div>
+      </div>
+      {{end}}
+    </div>
+
+  </div>
+
+  <div class="ad-position">
+    <!-- TODO 广告位 -->
+  </div>
+
+  <!--/footer-->
+  {{ template "footer" . }}
+</section>
+
+{{ template "endpage" . }}

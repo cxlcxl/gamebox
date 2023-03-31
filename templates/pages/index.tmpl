@@ -1,0 +1,89 @@
+{{ template "header" . }}
+
+{{ template "menu" .}}
+
+<section class="content-main-w3" id="home">
+  <div class="logo-wthree text-center" id="hot-games">
+    <a class="navbar-brand" href="javascript:void(0);">Hot Games</a>
+  </div>
+  <div class="container-fluid gallery-lightbox my-2">
+    <div class="row main-box">
+      {{range $idx, $game := .games.Hot}}
+        <div class="col-lg-1 col-md-2 col-sm-3 col-4 p-0 snap-img">
+          <div class="gallery_grid1 hover08" data-aos="fade-up">
+            <div class="gallery_effect">
+              <a href="/game?gid={{ $game.GameId }}" data-lightbox="example-set" data-title-wthree="{{ $game.Description }}">
+                <figure><img src="" data-lazy-src="{{ $game.Icon }}" alt="" class="lazy"/></figure>
+              </a>
+              <div class="game_name">{{$game.Name}}</div>
+            </div>
+          </div>
+        </div>
+      {{end}}
+    </div>
+  </div>
+
+
+  <div class="ad-position">
+    <!-- TODO 广告位 -->
+  </div>
+  <div class="logo-wthree text-center" id="new-games">
+    <a class="navbar-brand" href="javascript:void(0);">New Games</a>
+  </div>
+  <div class="container-fluid gallery-lightbox my-2">
+    <div class="row main-box">
+      {{range $idx, $game := .games.New}}
+      <div class="col-lg-1 col-md-2 col-sm-3 col-4 p-0 snap-img">
+        <div class="gallery_grid1 hover08" data-aos="fade-up">
+          <div class="gallery_effect">
+            <a href="/game?gid={{ $game.GameId }}" data-lightbox="example-set" data-title-wthree="{{ $game.Description }}">
+              <figure><img src="" data-lazy-src="{{ $game.Icon }}" alt="" class="lazy"/></figure>
+            </a>
+            <div class="game_name">{{$game.Name}}</div>
+          </div>
+        </div>
+      </div>
+      {{end}}
+    </div>
+  </div>
+
+  <div class="ad-position">
+    <!-- TODO 广告位 -->
+  </div>
+  <div class="logo-wthree text-center" id="all-games">
+    <a class="navbar-brand" href="javascript:void(0);">All Games</a>
+  </div>
+  <div class="container-fluid gallery-lightbox my-2">
+    <div class="row main-box">
+      {{range $idx, $game := .games}}
+        {{range $tag, $item := $game}}
+        <div class="col-lg-1 col-md-2 col-sm-3 col-4 p-0 snap-img">
+          <div class="gallery_grid1 hover08" data-aos="fade-up">
+            <div class="gallery_effect">
+              <a href="/game?gid={{ $item.GameId }}" data-lightbox="example-set" data-title-wthree="{{ $item.Description }}">
+                <figure><img src="" data-lazy-src="{{ $item.Icon }}" alt="" class="lazy"/></figure>
+              </a>
+              <div class="game_name">{{$item.Name}}</div>
+            </div>
+          </div>
+        </div>
+        {{end}}
+      {{end}}
+    </div>
+  </div>
+
+
+  <div class="ad-position">
+    <!-- TODO 广告位 -->
+  </div>
+
+
+  <!--/footer-->
+  {{ template "footer" . }}
+</section>
+
+<script type="text/javascript" src="/assets/js/lazyload.min.js"></script>
+<script type="text/javascript">
+  var lazyLoadInstance = new LazyLoad({use_native: true, elements_selector: "img", threshold: 0, data_src: 'lazy-src'});
+</script>
+{{ template "endpage" . }}

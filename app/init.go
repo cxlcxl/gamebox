@@ -1,8 +1,8 @@
 package app
 
 import (
-	"game.mobgi.cc/app/vars"
-	"game.mobgi.cc/library/config"
+	"gigame.xyz/app/vars"
+	"gigame.xyz/library/config"
 	"gopkg.in/ini.v1"
 	"log"
 	"os"

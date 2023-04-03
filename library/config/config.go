@@ -4,9 +4,9 @@ import (
 	"log"
 	"time"
 
-	"game.mobgi.cc/app/vars"
-	"game.mobgi.cc/library/config_interface"
-	"game.mobgi.cc/library/container"
+	"gigame.xyz/app/vars"
+	"gigame.xyz/library/config_interface"
+	"gigame.xyz/library/container"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 )

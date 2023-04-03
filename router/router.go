@@ -1,11 +1,12 @@
 package router
 
 import (
-	"game.mobgi.cc/app/handlers"
-	"game.mobgi.cc/app/middleware"
+	"gigame.xyz/app/handlers"
+	"gigame.xyz/app/middleware"
+	"gigame.xyz/app/response"
 	"net/http"
 
-	"game.mobgi.cc/app/vars"
+	"gigame.xyz/app/vars"
 	"github.com/gin-gonic/gin"
 )
 
@@ -28,6 +29,22 @@ func Router() error {
 	r.GET("/game", (handlers.Home{}).GamePage)
 	r.GET("/play-trans", (handlers.Home{}).PlayTrans)
 	r.GET("/play", (handlers.Home{}).GamePlay)
+
+	r.GET("/about", func(ctx *gin.Context) {
+		response.HTML(ctx, "about", nil)
+	})
+	r.GET("/privacy", func(ctx *gin.Context) {
+		response.HTML(ctx, "privacy", nil)
+	})
+	r.GET("/cookies", func(ctx *gin.Context) {
+		response.HTML(ctx, "cookie", nil)
+	})
+	r.GET("/contact", func(ctx *gin.Context) {
+		response.HTML(ctx, "contact", nil)
+	})
+	r.GET("/copyright", func(ctx *gin.Context) {
+		response.HTML(ctx, "copyright", nil)
+	})
 
 	r.GET("/ads.txt", func(ctx *gin.Context) {
 		ctx.String(http.StatusOK, vars.YmlConfig.GetString("AdsTxt"))

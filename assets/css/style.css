@@ -577,12 +577,9 @@ ul.social-icons li a {
     color: #fff;
     text-decoration: none;
     font-size: 14px;
-    width: 38px;
     height: 38px;
-    border-radius: 50%;
     line-height: 34px;
     background: transparent;
-    border: 2px solid #fff;
     text-align: center;
 }
 

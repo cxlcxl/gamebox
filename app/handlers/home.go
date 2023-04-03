@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"game.mobgi.cc/app/response"
-	"game.mobgi.cc/app/vars"
+	"gigame.xyz/app/response"
+	"gigame.xyz/app/vars"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )

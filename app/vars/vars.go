@@ -1,7 +1,7 @@
 package vars
 
 import (
-	"game.mobgi.cc/library/config_interface"
+	"gigame.xyz/library/config_interface"
 	"log"
 	"os"
 	"strings"

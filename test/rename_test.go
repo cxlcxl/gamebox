@@ -1,7 +1,7 @@
 package test
 
 import (
-	"game.mobgi.cc/utils"
+	"gigame.xyz/utils"
 	"path"
 	"testing"
 )

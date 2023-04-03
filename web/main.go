@@ -1,8 +1,8 @@
 package main
 
 import (
-	_ "game.mobgi.cc/app"
-	"game.mobgi.cc/router"
+	_ "gigame.xyz/app"
+	"gigame.xyz/router"
 	"log"
 )
 

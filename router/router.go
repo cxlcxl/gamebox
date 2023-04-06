@@ -1,8 +1,7 @@
 package router
 
 import (
-	"gigame.xyz/app/handlers"
-	"gigame.xyz/app/middleware"
+	"gigame.xyz/app/handlers/box1"
 	"gigame.xyz/app/response"
 	"net/http"
 
@@ -19,16 +18,17 @@ func Router() error {
 	//address := vars.YmlConfig.GetString("Redis.Host")
 	//pass := vars.YmlConfig.GetString("Redis.Password")
 	//store, _ := redis.NewStore(10, "tcp", address, pass, []byte(""))
-	//r.Use(sessions.Sessions("MobgiGameSessions", store))
+	//r.Use(sessions.Sessions("GiGameSessions", store))
 
 	//if vars.YmlConfig.GetBool("HttpServer.AllowCrossDomain") {
 	//	r.Use(corsNext())
 	//}
 
-	r.GET("/", (handlers.Home{}).Home)
-	r.GET("/game", (handlers.Home{}).GamePage)
-	r.GET("/play-trans", (handlers.Home{}).PlayTrans)
-	r.GET("/play", (handlers.Home{}).GamePlay)
+	r.GET("/", (box1.Home{}).Home)
+	r.GET("/game", (box1.Home{}).GamePage)
+	r.GET("/play-trans", (box1.Home{}).PlayTrans)
+	r.GET("/play", (box1.Home{}).GamePlay)
+	r.GET("/search", (box1.Home{}).Search)
 
 	r.GET("/about", func(ctx *gin.Context) {
 		response.HTML(ctx, "about", nil)
@@ -49,14 +49,6 @@ func Router() error {
 	r.GET("/ads.txt", func(ctx *gin.Context) {
 		ctx.String(http.StatusOK, vars.YmlConfig.GetString("AdsTxt"))
 	})
-
-	r.Use(middleware.CheckUserLogin())
-	{
-
-	}
-	//r.GET("/docs", func(ctx *gin.Context) {
-	//ctx.HTML(http.StatusOK, "docs.tmpl", gin.H{})
-	//})
 
 	return r.Run(vars.YmlConfig.GetString("HttpServer.Port"))
 }

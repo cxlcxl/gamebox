@@ -1,0 +1,47 @@
+{{define "menu"}}
+
+<div class="header_top_w3ls">
+  <div class="menu-container">
+    <div id="navbarSupportedContent">
+      <a href="/"><img src="/assets/images/logo.png" class="mobgi-game-logo"/></a>
+    </div>
+    <div style="flex: 1;"></div>
+    <div class="game-search">
+      <div class="search-box">
+        <i class="fa fa-search"></i>
+        <input type="text" placeholder="Search" id="search-input1" value="{{ .k }}"/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="search-container">
+  <i class="fa fa-search"></i>
+  <input type="text" placeholder="Search" id="search-input2" value="{{ .k }}"/>
+</div>
+
+<script>
+  var searchInput1 = document.getElementById("search-input1")
+  if (searchInput1) {
+    searchInput1.addEventListener("blur", searchGames, false)
+    searchInput1.addEventListener("change", changeSearch1, false)
+  }
+  var searchInput2 = document.getElementById("search-input2")
+  if (searchInput2) {
+    searchInput2.addEventListener("blur", searchGames, false)
+    searchInput2.addEventListener("change", changeSearch2, false)
+  }
+  function searchGames() {
+    const v1 = searchInput1.value.trim()
+    if (v1 !== '') {window.location.href = '/search?k=' + v1}
+    const v2 = searchInput2.value.trim()
+    if (v2 !== '') {window.location.href = '/search?k=' + v2}
+  }
+  function changeSearch1() {
+    searchInput2.value = searchInput1.value
+  }
+  function changeSearch2() {
+    searchInput1.value = searchInput2.value
+  }
+</script>
+{{end}}

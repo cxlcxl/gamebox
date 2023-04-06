@@ -16,4 +16,5 @@ type Game struct {
 	Description string
 	Tag         string
 	ShowAd      uint8
+	Star        uint8
 }

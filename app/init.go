@@ -6,6 +6,7 @@ import (
 	"gopkg.in/ini.v1"
 	"log"
 	"os"
+	"strconv"
 )
 
 func init() {
@@ -41,6 +42,7 @@ func loadIniGames() {
 			continue
 		}
 		gameMap := section.KeysHash()
+		star, _ := strconv.Atoi(gameMap["Star"])
 		vars.Games = append(vars.Games, &vars.Game{
 			Name:        section.Name(),
 			GameId:      gameMap["GameId"],
@@ -48,6 +50,7 @@ func loadIniGames() {
 			Icon:        gameMap["Icon"],
 			Description: gameMap["Description"],
 			Tag:         gameMap["Tag"],
+			Star:        uint8(star),
 			ShowAd:      0,
 		})
 	}

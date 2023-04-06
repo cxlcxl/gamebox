@@ -1,0 +1,84 @@
+{{ template "header" . }}
+{{ template "menu" . }}
+
+<section class="content-main-w3" id="home">
+
+  <div class="logo-wthree text-center">
+    <a class="navbar-brand" href="#">
+      {{.game.Name}}<!-- <span> Make Memories</span>-->
+    </a>
+  </div>
+
+  <div class="container-fluid gallery-lightbox my-2">
+    <div class="row m-0 mb-3">
+      <div class="col-lg-9 col-md-8 col-sm-12 col-12 p-0">
+        <div class="game-detail-ad-bg">
+          <div class="game-detail-icon">
+            <img src="{{ .game.Icon }}" alt=" ">
+          </div>
+          <div class="game-desc-title pl-2 pr-2 pt-2"><h6>DESCRIPTION</h6></div>
+          <div class="game-desc p-2">{{ .game.Description }}</div>
+          <div class="game-play"><a href="/play-trans?gid={{.game.GameId}}">PLAY NOW</a></div>
+          <!-- TODO 广告位 -->
+        </div>
+      </div>
+
+
+      <div class="col-lg-3 col-md-4 p-0 snap-img">
+        <!-- TODO 广告位 -->
+      </div>
+    </div>
+
+    <div class="row m-0">
+
+      <div class="col-lg-9 col-md-8 col-sm-12 col-12 p-0">
+        <div class="row m-0 may-like-box">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-12 p-0 u-may-like">May Like</div>
+          {{range $idx, $game := .games}}
+
+          <div class="col-lg-4 col-md-4 col-sm-6 col-12 p-0 snap-img">
+            <a href="/game?gid={{ $game.GameId }}">
+              <div class="gallery-game">
+                <div class="img-box"><img src="" data-lazy-src="{{ $game.Icon }}" alt="" class="lazy"/></div>
+                <div class="flex-width">
+                  <p class="gallery-game__name">{{$game.Name}}</p>
+                  <p class="gallery-game__score">
+                    <i class="fa {{if ge $game.Star 1}}fa-star{{else}}fa-star-o{{end}}"></i>
+                    <i class="fa {{if ge $game.Star 2}}fa-star{{else}}fa-star-o{{end}}"></i>
+                    <i class="fa {{if ge $game.Star 3}}fa-star{{else}}fa-star-o{{end}}"></i>
+                    <i class="fa {{if ge $game.Star 4}}fa-star{{else}}fa-star-o{{end}}"></i>
+                    <i class="fa {{if ge $game.Star 5}}fa-star{{else}}fa-star-o{{end}}"></i>
+                  </p>
+                </div>
+                <div class="gallery-game__play">
+                  <span class="play-btn">PLAY</span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          {{end}}
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-4 p-0 snap-img">
+        <!-- TODO 广告位 -->
+      </div>
+    </div>
+
+  </div>
+
+  <div class="ad-position">
+    <!-- TODO 广告位 -->
+  </div>
+
+  <!--/footer-->
+  {{ template "footer" . }}
+</section>
+
+<script type="text/javascript" src="/assets/js/lazyload.min.js"></script>
+<script type="text/javascript">
+  var lazyLoadInstance = new LazyLoad({use_native: true, elements_selector: "img", threshold: 0, data_src: 'lazy-src'});
+</script>
+
+{{ template "endpage" . }}

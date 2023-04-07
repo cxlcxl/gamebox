@@ -51,7 +51,6 @@ func loadIniGames() {
 			Description: gameMap["Description"],
 			Tag:         gameMap["Tag"],
 			Star:        uint8(star),
-			ShowAd:      0,
 		})
 	}
 }

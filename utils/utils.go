@@ -1,8 +1,11 @@
 package utils
 
 import (
+	"crypto/aes"
+	"crypto/cipher"
 	"crypto/md5"
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"os"
 	"os/exec"
@@ -67,4 +70,38 @@ func MD5(params string) string {
 	md5Ctx := md5.New()
 	md5Ctx.Write([]byte(params))
 	return hex.EncodeToString(md5Ctx.Sum(nil))
+}
+
+//AesDecrypt 解密
+func AesDecrypt(data []byte, key []byte) ([]byte, error) {
+	//创建实例
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, err
+	}
+	//获取块的大小
+	blockSize := block.BlockSize()
+	//使用cbc
+	blockMode := cipher.NewCBCDecrypter(block, key[:blockSize])
+	//初始化解密数据接收切片
+	crypted := make([]byte, len(data))
+	//执行解密
+	blockMode.CryptBlocks(crypted, data)
+	//去除填充
+	crypted, err = pkcs7UnPadding(crypted)
+	if err != nil {
+		return nil, err
+	}
+	return crypted, nil
+}
+
+//pkcs7UnPadding 填充的反向操作
+func pkcs7UnPadding(data []byte) ([]byte, error) {
+	length := len(data)
+	if length == 0 {
+		return nil, errors.New("加密字符串错误！")
+	}
+	//获取填充的个数
+	unPadding := int(data[length-1])
+	return data[:(length - unPadding)], nil
 }

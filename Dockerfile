@@ -15,8 +15,8 @@ ADD go.sum .
 RUN go mod download
 COPY . .
 
-COPY templates /app/templates
-COPY assets /app/assets
+#COPY templates /app/templates
+COPY assets/images/game-icons /app/assets/images/game-icons
 COPY config/games.ini /app/config/games.ini
 COPY config/web.example.yaml /app/config/web.yaml
 RUN go build -ldflags="-s -w" -o /app/web/gamebox web/main.go
@@ -30,8 +30,6 @@ FROM scratch
 
 WORKDIR /app
 COPY --from=builder /app/web/gamebox /app/web/gamebox
-COPY --from=builder /app/templates /app/templates
 COPY --from=builder /app/assets /app/assets
-COPY --from=builder /app/config /app/config
 
 CMD ["./web/gamebox"]

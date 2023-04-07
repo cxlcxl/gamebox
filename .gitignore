@@ -6,4 +6,5 @@ config/web.yaml
 storage/logs
 web/storage
 pyselenium
-gameboxweb
+gameboxweb/node_modules
+gameboxweb/dist

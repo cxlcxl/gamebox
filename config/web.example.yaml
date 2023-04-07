@@ -39,3 +39,6 @@ Logs:
   Compress: false #日志备份时，是否进行压缩
 
 AdsTxt: "google.com, pub-6230025462157662, DIRECT, f08c47fec0942fa0"
+
+BoxKeys:
+  Box01: ""

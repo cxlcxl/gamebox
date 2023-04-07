@@ -2,7 +2,7 @@ package router
 
 import (
 	"gigame.xyz/app/handlers/box1"
-	"gigame.xyz/app/response"
+	"gigame.xyz/app/middleware"
 	"net/http"
 
 	"gigame.xyz/app/vars"
@@ -12,7 +12,7 @@ import (
 func Router() error {
 	r := gin.Default()
 
-	r.LoadHTMLGlob("templates/**/*")
+	//r.LoadHTMLGlob("templates/**/*")
 	r.StaticFS("assets", http.Dir("./assets"))
 
 	//address := vars.YmlConfig.GetString("Redis.Host")
@@ -20,35 +20,43 @@ func Router() error {
 	//store, _ := redis.NewStore(10, "tcp", address, pass, []byte(""))
 	//r.Use(sessions.Sessions("GiGameSessions", store))
 
-	//if vars.YmlConfig.GetBool("HttpServer.AllowCrossDomain") {
-	//	r.Use(corsNext())
-	//}
+	if vars.YmlConfig.GetBool("HttpServer.AllowCrossDomain") {
+		r.Use(corsNext())
+	}
 
-	r.GET("/", (box1.Home{}).Home)
-	r.GET("/game", (box1.Home{}).GamePage)
-	r.GET("/play-trans", (box1.Home{}).PlayTrans)
-	r.GET("/play", (box1.Home{}).GamePlay)
-	r.GET("/search", (box1.Home{}).Search)
+	//r.GET("/", (box1.Home{}).Home)
+	//r.GET("/game", (box1.Home{}).GamePage)
+	//r.GET("/play-trans", (box1.Home{}).PlayTrans)
+	//r.GET("/play", (box1.Home{}).GamePlay)
+	//r.GET("/search", (box1.Home{}).Search)
+	//
+	//r.GET("/about", func(ctx *gin.Context) {
+	//	response.HTML(ctx, "about", nil)
+	//})
+	//r.GET("/privacy", func(ctx *gin.Context) {
+	//	response.HTML(ctx, "privacy", nil)
+	//})
+	//r.GET("/cookies", func(ctx *gin.Context) {
+	//	response.HTML(ctx, "cookie", nil)
+	//})
+	//r.GET("/contact", func(ctx *gin.Context) {
+	//	response.HTML(ctx, "contact", nil)
+	//})
+	//r.GET("/copyright", func(ctx *gin.Context) {
+	//	response.HTML(ctx, "copyright", nil)
+	//})
+	//
+	//r.GET("/ads.txt", func(ctx *gin.Context) {
+	//	ctx.String(http.StatusOK, vars.YmlConfig.GetString("AdsTxt"))
+	//})
 
-	r.GET("/about", func(ctx *gin.Context) {
-		response.HTML(ctx, "about", nil)
-	})
-	r.GET("/privacy", func(ctx *gin.Context) {
-		response.HTML(ctx, "privacy", nil)
-	})
-	r.GET("/cookies", func(ctx *gin.Context) {
-		response.HTML(ctx, "cookie", nil)
-	})
-	r.GET("/contact", func(ctx *gin.Context) {
-		response.HTML(ctx, "contact", nil)
-	})
-	r.GET("/copyright", func(ctx *gin.Context) {
-		response.HTML(ctx, "copyright", nil)
-	})
-
-	r.GET("/ads.txt", func(ctx *gin.Context) {
-		ctx.String(http.StatusOK, vars.YmlConfig.GetString("AdsTxt"))
-	})
+	g := r.Group("/api/box01", middleware.CheckAuth())
+	{
+		g.GET("/games", (box1.Api{}).Games)
+		g.GET("/game", (box1.Api{}).GameInfo)
+		g.GET("/game/:gid", (box1.Api{}).GamePlay)
+		g.GET("/search", (box1.Api{}).Search)
+	}
 
 	return r.Run(vars.YmlConfig.GetString("HttpServer.Port"))
 }

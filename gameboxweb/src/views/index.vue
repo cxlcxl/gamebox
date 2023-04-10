@@ -48,6 +48,7 @@ import { defineComponent, reactive, onMounted } from "vue"
 import { gameList } from "@/utils/apis"
 import GameAdvance from "@/components/GameAdvance/index.vue"
 import GameBlock from "@/components/Game/index.vue"
+import { getStorage, setStorage } from "@/utils/cache"
 
 export default defineComponent({
   components: { GameBlock, GameAdvance },
@@ -57,12 +58,18 @@ export default defineComponent({
       stars: [1, 2, 3, 4, 5],
     })
     onMounted(() => {
-      getGames()
+      let d = getStorage("games")
+      if (d) {
+        ds.games = d
+      } else {
+        getGames()
+      }
     })
     const getGames = () => {
       gameList()
         .then((res) => {
           ds.games = res.data
+          setStorage("games", res.data)
         })
         .catch((e) => {
           console.log(e)

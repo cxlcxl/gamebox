@@ -1,6 +1,5 @@
 import axios from "axios"
 import CryptoJS from "crypto-js"
-import Config from "@/setting"
 import { toastMsg } from "./index"
 
 // 加密
@@ -17,9 +16,11 @@ function encrypt(pwd, key, iv) {
 }
 
 function generateSecret() {
+  const key = process.env.VUE_APP_KEY
+  const enKey = process.env.VUE_APP_ENCRYPTKEY
   let timestamp = new Date().getTime()
   let second = Math.floor(timestamp / 1000)
-  return encrypt(Number(second) + 30, Config.SecretKey, Config.SecretKey)
+  return encrypt(enKey + "-" + second.toString(), key, key)
 }
 
 const rs = axios.create({

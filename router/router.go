@@ -14,7 +14,6 @@ func Router() error {
 
 	//r.LoadHTMLGlob("templates/**/*")
 	r.StaticFS("assets", http.Dir("./assets"))
-
 	//address := vars.YmlConfig.GetString("Redis.Host")
 	//pass := vars.YmlConfig.GetString("Redis.Password")
 	//store, _ := redis.NewStore(10, "tcp", address, pass, []byte(""))

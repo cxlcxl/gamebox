@@ -2,13 +2,12 @@ package middleware
 
 import (
 	"encoding/base64"
+	"fmt"
 	"gigame.xyz/app/response"
 	"gigame.xyz/app/vars"
 	"gigame.xyz/utils"
 	"github.com/gin-gonic/gin"
-	"strconv"
 	"strings"
-	"time"
 )
 
 type Headers struct {
@@ -31,12 +30,13 @@ func CheckAuth() gin.HandlerFunc {
 			response.AuthFail(ctx)
 			return
 		}
-		key := vars.YmlConfig.GetString("BoxKeys." + token[0])
+		key := vars.YmlConfig.GetString(fmt.Sprintf("BoxKeys.%s.Key", token[0]))
 		if key == "" {
 			response.AuthFail(ctx)
 			return
 		}
-		if !checkSecret(key, token[1]) {
+		ek := vars.YmlConfig.GetString(fmt.Sprintf("BoxKeys.%s.EKey", token[0]))
+		if !checkSecret(key, token[1], ek) {
 			response.AuthFail(ctx)
 			return
 		}
@@ -44,7 +44,7 @@ func CheckAuth() gin.HandlerFunc {
 	}
 }
 
-func checkSecret(k, s string) bool {
+func checkSecret(k, s, ek string) bool {
 	decodeString, err := base64.StdEncoding.DecodeString(s)
 	if err != nil {
 		return false
@@ -53,12 +53,8 @@ func checkSecret(k, s string) bool {
 	if err != nil {
 		return false
 	}
-	i, err := strconv.ParseInt(string(ds), 0, 64)
-	if err != nil {
-		return false
-	}
-	n := time.Now().Unix()
-	if i-n <= 0 || i-n > 30 { // 有效期保证在 30s 内
+	splits := strings.Split(string(ds), "-")
+	if splits[0] != ek {
 		return false
 	}
 	return true

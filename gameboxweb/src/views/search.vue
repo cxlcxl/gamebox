@@ -1,5 +1,6 @@
 <template>
   <section class="content-main-w3" id="home">
+    <SearchPage />
     <div class="container-fluid gallery-lightbox my-2">
       <div class="row main-box">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12 p-0 u-may-like">Search Result</div>
@@ -10,9 +11,7 @@
       </div>
     </div>
 
-    <div class="ad-position">
-      <!-- TODO 广告位 -->
-    </div>
+    <AdHorizontal AdSlot="search-horizontal" />
 
   </section>
 </template>
@@ -21,9 +20,11 @@ import { defineComponent, onMounted, reactive } from "vue"
 import { searchGames } from "@/utils/apis"
 import { useRoute } from "vue-router"
 import GameAdvance from "@/components/GameAdvance/index.vue"
+import SearchPage from "@/components/Search/index.vue"
+import AdHorizontal from "@/components/AdHorizontal/index.vue"
 
 export default defineComponent({
-  components: { GameAdvance },
+  components: { GameAdvance, SearchPage, AdHorizontal },
   setup() {
     const route = useRoute()
     const ds = reactive({
@@ -37,7 +38,11 @@ export default defineComponent({
     })
     const fetchGames = (k) => {
       searchGames({ k })
-        .then((res) => (ds.games = res.data))
+        .then((res) => {
+          if (Array.isArray(res.data)) {
+            ds.games = res.data
+          }
+        })
         .catch((e) => console.log(e))
     }
     return {

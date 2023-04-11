@@ -1,21 +1,10 @@
-import Cookies from "js-cookie"
+import CryptoJS from "crypto-js"
+import Settings from "@/setting"
+
 // cookie保存的天数
-
 const cache_expires = 36000
-
-export const setToken = (k, v) => {
-  Cookies.set(k, v, { expires: cache_expires })
-}
-
-export const getToken = (k) => {
-  const token = Cookies.get(k)
-  if (token) return token
-  else return false
-}
-
-export const delToken = (k) => {
-  Cookies.remove(k)
-}
+const SECRET_KEY = CryptoJS.enc.Utf8.parse(Settings.Uid)
+const SECRET_IV = CryptoJS.enc.Utf8.parse(Settings.OpenId)
 
 // 类型 window.localStorage,window.sessionStorage,
 const config = {
@@ -42,7 +31,7 @@ export const setStorage = (key, value, expire = 0) => {
 
   // console.log("set data ", data)
 
-  const encryptString = JSON.stringify(data)
+  const encryptString = encrypt(JSON.stringify(data))
   window.localStorage.setItem(autoAddPrefix(key), encryptString)
 }
 
@@ -64,7 +53,7 @@ export const getStorage = (key) => {
   }
 
   // 优化 持续使用中续期
-  const storage = JSON.parse(window.localStorage.getItem(key))
+  const storage = JSON.parse(decrypt(window.localStorage.getItem(key)))
   let nowTime = Date.now()
   // 过期删除
   let setExpire = (storage.expire || config.expire) * 1000,
@@ -113,4 +102,43 @@ export const getStorageAll = () => {
 // 删除 removeStorage
 export const removeStorage = (key) => {
   window.localStorage.removeItem(autoAddPrefix(key))
+}
+
+/**
+ * 加密方法
+ * @param data
+ * @returns {string}
+ */
+const encrypt = (data) => {
+  if (typeof data === "object") {
+    try {
+      data = JSON.stringify(data)
+    } catch (error) {
+      console.log("encrypt error:", error)
+    }
+  }
+  const dataHex = CryptoJS.enc.Utf8.parse(data)
+  const encrypted = CryptoJS.AES.encrypt(dataHex, SECRET_KEY, {
+    iv: SECRET_IV,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7,
+  })
+  return encrypted.ciphertext.toString()
+}
+
+/**
+ * 解密方法
+ * @param data
+ * @returns {string}
+ */
+const decrypt = (data) => {
+  const encryptedHexStr = CryptoJS.enc.Hex.parse(data)
+  const str = CryptoJS.enc.Base64.stringify(encryptedHexStr)
+  const decrypt = CryptoJS.AES.decrypt(str, SECRET_KEY, {
+    iv: SECRET_IV,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7,
+  })
+  const decryptedStr = decrypt.toString(CryptoJS.enc.Utf8)
+  return decryptedStr.toString()
 }

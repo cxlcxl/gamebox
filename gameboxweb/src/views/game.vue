@@ -1,4 +1,6 @@
 <template>
+  <SearchPage />
+
   <section class="content-main-w3" id="home">
     <div class="logo-wthree text-center">
       <a class="navbar-brand" href="#">
@@ -16,20 +18,11 @@
             <div class="game-desc-title p-2">
               <h6>DESCRIPTION</h6>
             </div>
-            <div class="game-desc p-2">{{ds.gameInfo.game.Description}}</div>
+            <div class="game-desc p-2">{{ds.gameInfo.game.Description ? ds.gameInfo.game.Description : ds.welcome}}</div>
             <div class="game-play" @click="play(ds.gameInfo.game.GameId)"><a>PLAY NOW</a></div>
-            <!-- TODO 广告位 -->
           </div>
-        </div>
 
-        <div class="col-lg-3 col-md-4 p-0 snap-img">
-          <!-- TODO 广告位 -->
-        </div>
-      </div>
-
-      <div class="row m-0">
-
-        <div class="col-lg-9 col-md-8 col-sm-12 col-12 p-0">
+          <AdHorizontal AdSlot="game-horizontal" />
           <div class="row m-0 may-like-box">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12 p-0 u-may-like">May Like</div>
             <div class="col-lg-4 col-md-6 col-sm-6 col-12 p-0 snap-img" v-for="item, idx in ds.gameInfo.games" :key="idx">
@@ -39,16 +32,11 @@
         </div>
 
         <div class="col-lg-3 col-md-4 p-0 snap-img">
-          <!-- TODO 广告位 -->
+          <AdPortrait AdSlot="game-portrait" />
         </div>
       </div>
 
     </div>
-
-    <div class="ad-position">
-      <!-- TODO 广告位 -->
-    </div>
-
   </section>
 </template>
 
@@ -56,16 +44,20 @@
 import { defineComponent, onMounted, reactive } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import GameAdvance from "@/components/GameAdvance/index.vue"
+import SearchPage from "@/components/Search/index.vue"
+import AdHorizontal from "@/components/AdHorizontal/index.vue"
+import AdPortrait from "@/components/AdPortrait/index.vue"
 import { getGameInfo } from "@/utils/apis"
 
 export default defineComponent({
-  components: { GameAdvance },
+  components: { GameAdvance, SearchPage, AdHorizontal, AdPortrait },
   setup() {
     const route = useRoute()
     const router = useRouter()
 
     const ds = reactive({
       gameInfo: { game: {}, games: [] },
+      welcome: "Welcome!",
     })
 
     onMounted(() => {

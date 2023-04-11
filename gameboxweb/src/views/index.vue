@@ -1,5 +1,7 @@
 <template>
   <section class="content-main-w3" id="home">
+    <SearchPage />
+
     <div class="container-fluid gallery-lightbox my-2">
       <div class="row main-box">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12 p-0 u-may-like">Hot Games</div>
@@ -9,9 +11,7 @@
       </div>
     </div>
 
-    <div class="ad-position">
-      <!-- TODO 广告位 -->
-    </div>
+    <AdHorizontal AdSlot="home-horizontal" />
 
     <div class="container-fluid gallery-lightbox my-2">
       <div class="row main-box">
@@ -22,9 +22,7 @@
       </div>
     </div>
 
-    <div class="ad-position">
-      <!-- TODO 广告位 -->
-    </div>
+    <AdHorizontal AdSlot="home-horizontal-1" />
 
     <div class="container-fluid gallery-lightbox my-2">
       <div class="row main-box">
@@ -35,9 +33,7 @@
       </div>
     </div>
 
-    <div class="ad-position">
-      <!-- TODO 广告位 -->
-    </div>
+    <AdHorizontal AdSlot="home-horizontal-2" />
   </section>
 
 </template>
@@ -48,10 +44,12 @@ import { defineComponent, reactive, onMounted } from "vue"
 import { gameList } from "@/utils/apis"
 import GameAdvance from "@/components/GameAdvance/index.vue"
 import GameBlock from "@/components/Game/index.vue"
+import SearchPage from "@/components/Search/index.vue"
+import AdHorizontal from "@/components/AdHorizontal/index.vue"
 import { getStorage, setStorage } from "@/utils/cache"
 
 export default defineComponent({
-  components: { GameBlock, GameAdvance },
+  components: { GameBlock, GameAdvance, SearchPage, AdHorizontal },
   setup() {
     const ds = reactive({
       games: { Hot: [], New: [], All: [] },

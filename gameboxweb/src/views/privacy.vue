@@ -2,7 +2,7 @@
 
   <section class="content-main-w3" id="home">
 
-    <div class="privacy row" style="background: #f8f8f8; margin: 0;">
+    <div class="privacy row" style="background: #f8f8f8; margin: 0; padding: 20px 0;">
       <div class="main_content col-lg-9 col-md-10 col-sm-10 col-12" style="margin: 0 auto;">
         <h2>PRIVACY POLICY</h2>
         <br />

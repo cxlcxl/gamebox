@@ -17,8 +17,8 @@ COPY . .
 
 #COPY templates /app/templates
 COPY assets/images/game-icons /app/assets/images/game-icons
-COPY config/games.ini /app/config/games.ini
-COPY config/web.example.yaml /app/config/web.yaml
+#COPY config/games.ini /app/config/games.ini
+#COPY config/web.example.yaml /app/config/web.yaml
 RUN go build -ldflags="-s -w" -o /app/web/gamebox web/main.go
 
 

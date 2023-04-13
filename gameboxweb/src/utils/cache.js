@@ -29,8 +29,6 @@ export const setStorage = (key, value, expire = 0) => {
     expire: expire, // 过期时间
   }
 
-  // console.log("set data ", data)
-
   // const encryptString = encrypt(JSON.stringify(data))
   const encryptString = JSON.stringify(data)
   window.localStorage.setItem(autoAddPrefix(key), encryptString)
@@ -60,7 +58,6 @@ export const getStorage = (key) => {
   // 过期删除
   let setExpire = (storage.expire || config.expire) * 1000,
     expDiff = nowTime - storage.time
-  // console.log("set time", setExpire, expDiff)
   if (setExpire < expDiff) {
     removeStorage(key)
     return null

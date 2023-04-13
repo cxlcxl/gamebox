@@ -19,7 +19,7 @@ type Game struct {
 
 var (
 	listColumns = []string{"game_id", "_name", "_icon", "_star", "_topics"}
-	infoColumns = []string{"game_id", "_name", "_icon", "_url"}
+	infoColumns = []string{"game_id", "_name", "_icon", "_star", "_url"}
 )
 
 type ListGame struct {
@@ -35,6 +35,7 @@ type InfoGame struct {
 	Name   string `json:"name" gorm:"column:_name"`
 	Icon   string `json:"icon" gorm:"column:_icon"`
 	Url    string `json:"url" gorm:"column:_url"`
+	Star   int    `json:"star" gorm:"column:_star"`
 	Desc   string `json:"desc" gorm:"-"`
 }
 

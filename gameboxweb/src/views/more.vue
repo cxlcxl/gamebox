@@ -20,6 +20,7 @@ import GameAdvance from "@/components/GameAdvance/index.vue"
 import DisplayAds from "@/components/DisplayAds/index.vue"
 import { useRoute, useRouter } from "vue-router"
 import { topicGames } from "@/utils/apis"
+import { getStorage } from "@/utils/cache"
 
 export default defineComponent({
   components: { GameAdvance, SearchPage, DisplayAds },
@@ -36,7 +37,11 @@ export default defineComponent({
         router.replace({ name: "Home" })
       }
       ds.c = route.query.c
-      fetchGames(ds.c)
+      if (ds.c === "Played") {
+        fetchPlayedGames()
+      } else {
+        fetchGames(ds.c)
+      }
     })
     const fetchGames = (topic) => {
       topicGames({ topic })
@@ -46,6 +51,12 @@ export default defineComponent({
           }
         })
         .catch((e) => console.log(e))
+    }
+    const fetchPlayedGames = () => {
+      const played = getStorage("played")
+      if (Array.isArray(played)) {
+        ds.games = played
+      }
     }
     return {
       ds,

@@ -38,65 +38,71 @@
   </section>
 </template>
 
-<script>
-import { defineComponent, onMounted, reactive } from "vue"
+<script setup>
+import { onMounted, reactive } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import GameAdvance from "@/components/GameAdvance/index.vue"
 import SearchPage from "@/components/Search/index.vue"
 import DisplayAds from "@/components/DisplayAds/index.vue"
 import { getGameInfo, topicGames } from "@/utils/apis"
 import Setting from "@/setting"
+import { getStorage, setStorage } from "@/utils/cache"
 
-export default defineComponent({
-  components: { GameAdvance, SearchPage, DisplayAds },
-  setup() {
-    const route = useRoute()
-    const router = useRouter()
+const route = useRoute()
+const router = useRouter()
 
-    const ds = reactive({
-      game: {},
-      games: [],
-      welcome: Setting.CompanyDesc,
-    })
-
-    onMounted(() => {
-      gameInfo(route.query.gid)
-      likeGameInfo()
-    })
-    const gameInfo = (gid) => {
-      if (!/^[a-zA-Z0-9]{10,15}$/.test(gid)) {
-        router.push({ name: "Home" })
-        return
-      }
-      getGameInfo(gid)
-        .then((res) => {
-          ds.game = res.data
-        })
-        .catch((e) => {
-          console.log(e)
-        })
-    }
-    const likeGameInfo = () => {
-      topicGames({ topic: "Like" })
-        .then((res) => {
-          ds.games = res.data
-        })
-        .catch((e) => {
-          console.log(e)
-        })
-    }
-    const play = (gid) => {
-      router.push({ name: "Play", query: { gid } })
-    }
-    const goMore = () => {
-      router.push({ name: "More", query: { c: "Like" } })
-    }
-
-    return {
-      ds,
-      play,
-      goMore,
-    }
-  },
+const ds = reactive({
+  game: {},
+  games: [],
+  welcome: Setting.CompanyDesc,
 })
+
+onMounted(() => {
+  gameInfo(route.query.gid)
+  likeGameInfo()
+})
+const gameInfo = (gid) => {
+  if (!/^[a-zA-Z0-9]{10,15}$/.test(gid)) {
+    router.push({ name: "Home" })
+    return
+  }
+  getGameInfo(gid)
+    .then((res) => {
+      ds.game = res.data
+      actionPlayedGames(ds.game)
+    })
+    .catch((e) => {
+      console.log(e)
+    })
+}
+const actionPlayedGames = (game) => {
+  const played = getStorage("played")
+  if (Array.isArray(played)) {
+    let isPlayed = false
+    for (let i = 0; i < played.length; i++) {
+      if (played[i].game_id === game.game_id) {
+        isPlayed = true
+        break
+      }
+    }
+    if (!isPlayed) {
+      played.push(game)
+      setStorage("played", played)
+    }
+  } else {
+    setStorage("played", [game])
+  }
+}
+const likeGameInfo = () => {
+  topicGames({ topic: "Like" })
+    .then((res) => {
+      ds.games = res.data
+    })
+    .catch((e) => {
+      console.log(e)
+    })
+}
+const play = (gid) => {
+  router.push({ name: "Play", query: { gid } })
+}
 </script>

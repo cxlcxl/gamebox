@@ -40,6 +40,7 @@ func CheckAuth() gin.HandlerFunc {
 			response.AuthFail(ctx)
 			return
 		}
+		ctx.Set(vars.GameBoxKey, token[0])
 		ctx.Next()
 	}
 }

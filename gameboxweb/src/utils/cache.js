@@ -31,7 +31,8 @@ export const setStorage = (key, value, expire = 0) => {
 
   // console.log("set data ", data)
 
-  const encryptString = encrypt(JSON.stringify(data))
+  // const encryptString = encrypt(JSON.stringify(data))
+  const encryptString = JSON.stringify(data)
   window.localStorage.setItem(autoAddPrefix(key), encryptString)
 }
 
@@ -53,7 +54,8 @@ export const getStorage = (key) => {
   }
 
   // 优化 持续使用中续期
-  const storage = JSON.parse(decrypt(window.localStorage.getItem(key)))
+  // const storage = JSON.parse(decrypt(window.localStorage.getItem(key)))
+  const storage = JSON.parse(window.localStorage.getItem(key))
   let nowTime = Date.now()
   // 过期删除
   let setExpire = (storage.expire || config.expire) * 1000,

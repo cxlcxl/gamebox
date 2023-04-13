@@ -3,14 +3,17 @@ const settings = {
   OpenId: "giqHQRZ9iX8uJwhT",
   ContactEmail: "gigame.service@gmail.com",
   AdClientId: "ca-pub-6230025462157662",
+  AdClientId1: "ca-pub-6267705206177514",
   AdSlots: {
-    "home-horizontal-1": "9224276333",
-    "home-horizontal-2": "9088544961",
-    "home-horizontal": "6637641442",
-    "search-horizontal": "8820079510",
-    "game-horizontal": "1916631954",
-    "game-portrait": "7224798959",
+    "home-horizontal-1": "1790269750",
+    "home-horizontal-2": "1790269750",
+    "home-horizontal": "1790269750",
+    "search-horizontal": "1790269750",
+    "game-horizontal": "1790269750",
+    "game-portrait": "2629580843",
   },
+  CompanyDesc:
+    "gigame.xyz is one of the best free sites for online games. All games are in real-time, which means you can run these interesting games directly in your browser without downloading, logging, or paying. Everyone can play the lasted games and the best games for free!",
 }
 
 export default settings

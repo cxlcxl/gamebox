@@ -2,6 +2,8 @@ package vars
 
 import (
 	"gigame.xyz/library/config_interface"
+	libredis "gigame.xyz/library/redis"
+	"gorm.io/gorm"
 	"log"
 	"os"
 	"strings"
@@ -10,7 +12,8 @@ import (
 var (
 	BasePath  string
 	YmlConfig config_interface.YamlConfigInterface
-	Games     []*Game
+	Redis     *libredis.Redis
+	Mysql     *gorm.DB
 )
 
 func init() {

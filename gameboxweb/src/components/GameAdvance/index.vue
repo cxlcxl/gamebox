@@ -1,10 +1,10 @@
 <template>
   <div class="gallery-game">
-    <div class="img-box"><img v-lazy="props.GameInfo.Icon" /></div>
+    <div class="img-box"><img v-lazy="props.GameInfo.icon" /></div>
     <div class="flex-width">
-      <p class="gallery-game__name">{{props.GameInfo.Name}}</p>
+      <p class="gallery-game__name">{{props.GameInfo.name}}</p>
       <p class="gallery-game__score">
-        <show-stars :star="props.GameInfo.Star" />
+        <show-stars :star="props.GameInfo.star" />
       </p>
     </div>
     <div class="gallery-game__play">
@@ -29,7 +29,7 @@ export default defineComponent({
   setup(props) {
     const router = useRouter()
     const handleRoute = () => {
-      router.push({ name: "GameInfo", query: { gid: props.GameInfo.GameId } })
+      router.push({ name: "GameInfo", query: { gid: props.GameInfo.game_id } })
     }
     return {
       props,

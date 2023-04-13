@@ -1,19 +1,12 @@
 package vars
 
 const (
-	ConfigKeyPrefix = "MOBGI_GAME"
+	ConfigKeyPrefix = "GIGAME"
+	RedisKeyPrefix  = "gigame:"
+	GameBoxKey      = "__gigame_box__"
 	TemplateExt     = "tmpl"
 	HotGame         = "Hot"
 	NewGame         = "New"
 	NormalGame      = "Normal"
+	GameBox01       = "01"
 )
-
-type Game struct {
-	GameId      string
-	Name        string
-	GameUrl     string
-	Icon        string
-	Description string
-	Tag         string
-	Star        uint8
-}

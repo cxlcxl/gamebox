@@ -3,8 +3,8 @@
     <div class="back-home" @click="backHome">
       <img src="/images/home.png" />
     </div>
-    <iframe v-show="ds.game.GameUrl !== ''" ref="game" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" @load="loaded"
-      :src="ds.game.GameUrl" scrolling="auto" frameborder="0" id="game-iframe">
+    <iframe v-show="ds.game.url !== ''" ref="game" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" @load="loaded"
+      :src="ds.game.url" scrolling="auto" frameborder="0" id="game-iframe">
     </iframe>
   </div>
 </template>
@@ -12,7 +12,7 @@
 <script>
 import { defineComponent, reactive, onMounted } from "vue"
 import { useRoute, useRouter } from "vue-router"
-import { getGameDetail } from "@/utils/apis"
+import { getGameInfo } from "@/utils/apis"
 
 export default defineComponent({
   setup() {
@@ -27,12 +27,13 @@ export default defineComponent({
       gameInfo(route.query.gid)
     })
     const gameInfo = (gid) => {
-      if (!/^[A-Z0-9]{10,15}$/.test(gid)) {
+      if (!/^[a-zA-Z0-9]{10,15}$/.test(gid)) {
         router.push({ name: "Home" })
         return
       }
-      getGameDetail(gid)
+      getGameInfo(gid)
         .then((res) => {
+          document.getElementById("app").style.height = "100%" // 修正 adsense 导致的高度问题
           ds.game = res.data
         })
         .catch((e) => {
@@ -68,7 +69,7 @@ export default defineComponent({
     background-size: cover;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    top: 10%;
+    top: 20%;
     left: 0;
     z-index: 9999;
     cursor: pointer;

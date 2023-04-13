@@ -66,6 +66,12 @@ export const routes = [
         meta: { title: "Search" },
         component: () => import("@v/search.vue"),
       },
+      {
+        path: "more",
+        name: "More",
+        meta: { title: "More" },
+        component: () => import("@v/more.vue"),
+      },
     ],
   },
 ]

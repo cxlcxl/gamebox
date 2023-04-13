@@ -1,8 +1,11 @@
 @import "~bootstrap/scss/bootstrap";
 
 :root {
-	--primary: #17a2b8;
+	--primary: #ffc107;
 	--danger: #ed4014;
+	--page-width: 960px;
+  --bs-yellow: #ffc107;
+  --bs-yellow50: #fdd14f;
 }
 
 html,
@@ -53,6 +56,10 @@ ul {
     padding: 0;
 }
 
+.page-width {
+  max-width: var(--page-width) !important;
+}
+
 /*--/header --*/
 
 .container-fluid.gallery-lightbox.my-5 {
@@ -99,17 +106,20 @@ li.nav-item {
 /*}*/
 
 .header_top_w3ls {
-  background: #c9e2fc !important;
-  display: flex;
+  background: var(--bs-yellow) !important;
   height: 60px;
   line-height: 60px;
-
-  #navbarSupportedContent {
-    min-width: 110px;
-    padding: 0 10px;
-  }
-  .short-menu {
-    flex: 1;
+  .menu-container {
+    display: flex;
+    margin: 0 auto;
+  
+    #navbarSupportedContent {
+      min-width: 110px;
+      padding: 0 10px;
+    }
+    .short-menu {
+      flex: 1;
+    }
   }
 }
 
@@ -315,7 +325,7 @@ p.copy-right-w3ls a:hover {
     position: relative;
     height: 40px;
     line-height: 40px;
-    max-width: 1100px;
+    max-width: var(--page-width);
     margin: 20px auto 0;
     padding: 0 20px;
     input {
@@ -341,7 +351,7 @@ p.copy-right-w3ls a:hover {
 }
 
 .main-box {
-	max-width: 1100px !important;
+	max-width: var(--page-width) !important;
 	margin: 0 auto;
 	padding: 5px 0;
 }
@@ -374,12 +384,12 @@ figure {
 .game-detail-ad-bg {
 	max-height: 500px;
 	overflow: hidden;
-	padding: 10px 0;
+	padding: 25px 20px;
 	box-sizing: border-box;
-	border-radius: 10px;
-	background: var(--primary);
-	box-shadow: 0 0 15px var(--primary);
-	border: 2px solid #079cb4;
+	border-radius: 8px;
+	background: #bdc9db;
+	box-shadow: 0 0 15px #abb3bf;
+	// border: 2px solid #079cb4;
   .game-play {
     width: 100%;
     text-align: center;
@@ -391,7 +401,7 @@ figure {
       background: linear-gradient(to bottom right,#6f42c1, #6610f2, #007bff);
       cursor: pointer;
       padding: 0.2em 2em;
-      margin: 0.2em auto 0.15em;
+      margin: 0.4em auto 0.15em;
       border-radius: 15px;
     }
   }
@@ -399,12 +409,13 @@ figure {
     max-height: 120px;
     width: 100%;
     text-align: center;
+    margin-bottom: 20px;
+    
     img {
-      max-width: 100px;
-      max-height: 100px;
+      max-width: 120px;
+      max-height: 120px;
       border-radius: 23px;
       background: #fff;
-      margin-top: 3px;
     }
   }
 }
@@ -413,17 +424,34 @@ figure {
 }
 .game-desc {
 	box-sizing: border-box;
-	color: #d1d1d1;
+	color: #fff;
 	font-size: 1em;
 }
 
 .u-may-like {
-	color: #333;
-	font-size: 1.3em;
+  padding-left: 10px !important;
+	color: #fff;
+	font-size: 1em;
 	line-height: 2em;
+  height: 2em;
 	font-weight: 600;
 	border-bottom: 1px ridge var(--primary);
 	margin-bottom: 20px;
+  background: linear-gradient(to right,var(--bs-yellow), var(--bs-yellow50) 80px, #fff 160px);
+  display: flex;
+
+  span {
+    display: block;
+  }
+  .action {
+    font-size: .6em;
+    flex: 1;
+    text-align: right;
+    color: #666666;
+    font-weight: 400;
+    cursor: pointer;
+    padding-right: 10px;
+  }
 }
 
 #gigame-game-screen {
@@ -543,6 +571,7 @@ figure {
 
 .ad-position {
   position: relative;
+  height: auto;
 
   .advertisement {
     width: 100px;
@@ -559,7 +588,7 @@ figure {
 .ad-horizontal {
   margin: 10px auto;
   width: 100%;
-  max-width: 1100px !important;
+  max-width: var(--page-width) !important;
   overflow: hidden !important;
   // max-height: 200px;
 }
@@ -567,4 +596,7 @@ figure {
   padding: 10px;
   box-sizing: border-box;
   overflow: hidden !important;
+}
+.align-center {
+  margin: 0 auto !important;
 }

@@ -2,9 +2,9 @@
   <div class="gallery_grid1 hover08" @click="handleRoute" style="cursor: pointer;">
     <div class="gallery_effect">
       <a>
-        <figure><img v-lazy="props.GameInfo.Icon" /></figure>
+        <figure><img v-lazy="props.GameInfo.icon" /></figure>
       </a>
-      <div class="game_name">{{props.GameInfo.Name}}</div>
+      <div class="game_name">{{props.GameInfo.name}}</div>
     </div>
   </div>
 </template>
@@ -23,7 +23,7 @@ export default defineComponent({
   setup(props) {
     const router = useRouter()
     const handleRoute = () => {
-      router.push({ name: "GameInfo", query: { gid: props.GameInfo.GameId } })
+      router.push({ name: "GameInfo", query: { gid: props.GameInfo.game_id } })
     }
     return {
       props,

@@ -4,10 +4,26 @@
     <meta charset="UTF-8" />
     <link rel="shortcut icon" href="/public/images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6230025462157662" crossorigin="anonymous"></script>
     <title>GiGames</title>
-    <meta name="keywords" content="H5 games, HTML5 games, Online games, Gigame, Free games, Action games, Puzzle games, Sports games,Multiplayer games,Shooting games,Racing games">
+    <meta name="keywords" content="H5 games,HTML5 games,arcade games,popular games, free online games, mobile games, browser games, adventure games, gun games, Online games, Gigame, Free games, Action games, Puzzle games, Sports games,Multiplayer games,Shooting games,Racing games">
     <meta name="description" content="Gigame is the best online platform to play free H5 games. We offer a wide variety of HTML5 games, including action, puzzle, sports games, shooting games and more. Our games are available on all devices.">
+    <script>
+      function appendJs(url) {
+        let head = document.head || document.getElementsByTagName('head')[0]
+        let script = document.createElement('script')
+        script.setAttribute("async", "");
+        script.setAttribute("src", url);
+        script.setAttribute("crossorigin", "anonymous");
+        script.async = true
+        head.appendChild(script)
+      }
+   
+      if (location.host.indexOf("gigame.xyz") !== -1) {
+        appendJs("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6230025462157662")
+      } else {
+        appendJs("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6267705206177514")
+      }
+    </script>
   </head>
   <body>
     <div id="app"></div>

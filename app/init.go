@@ -3,10 +3,11 @@ package app
 import (
 	"gigame.xyz/app/vars"
 	"gigame.xyz/library/config"
-	"gopkg.in/ini.v1"
+	libmysql "gigame.xyz/library/gorm/mysql"
+	libredis "gigame.xyz/library/redis"
 	"log"
 	"os"
-	"strconv"
+	"time"
 )
 
 func init() {
@@ -16,7 +17,8 @@ func init() {
 	vars.YmlConfig = config.CreateYamlFactory()
 	vars.YmlConfig.ConfigFileChangeListen()
 
-	loadIniGames()
+	initDb()
+	initRedis()
 }
 
 // 检查必要的配置文件
@@ -31,26 +33,30 @@ func checkConfigFiles() {
 	}
 }
 
-func loadIniGames() {
-	cfg, err := ini.Load(vars.BasePath + "/config/games.ini")
-	if err != nil {
-		log.Fatal("游戏配置文件加载失败", err)
+func initDb() {
+	addr := vars.YmlConfig.GetString("Mysql.Host")
+	db := vars.YmlConfig.GetString("Mysql.Database")
+	username := vars.YmlConfig.GetString("Mysql.Username")
+	pwd := vars.YmlConfig.GetString("Mysql.Password")
+	charset := vars.YmlConfig.GetString("Mysql.Charset")
+	port := vars.YmlConfig.GetInt("Mysql.Port")
+	life := vars.YmlConfig.GetInt("Mysql.SetConnMaxLifetime")
+	if mysql, err := libmysql.NewMysql(addr, username, pwd, db, charset, port, time.Second*time.Duration(life)); err != nil {
+		log.Fatal("Redis 连接失败", err.Error())
 		return
+	} else {
+		vars.Mysql = mysql
 	}
-	for _, section := range cfg.Sections() {
-		if section.Name() == "" || section.Name() == "DEFAULT" {
-			continue
-		}
-		gameMap := section.KeysHash()
-		star, _ := strconv.Atoi(gameMap["Star"])
-		vars.Games = append(vars.Games, &vars.Game{
-			Name:        section.Name(),
-			GameId:      gameMap["GameId"],
-			GameUrl:     gameMap["GameUrl"],
-			Icon:        gameMap["Icon"],
-			Description: gameMap["Description"],
-			Tag:         gameMap["Tag"],
-			Star:        uint8(star),
-		})
+}
+
+func initRedis() {
+	addr := vars.YmlConfig.GetString("Redis.Host")
+	pwd := vars.YmlConfig.GetString("Redis.Password")
+	db := vars.YmlConfig.GetInt("Redis.Db")
+	if redis, err := libredis.NewRedis(addr, pwd, vars.RedisKeyPrefix, db); err != nil {
+		log.Fatal("Redis 连接失败", err.Error())
+		return
+	} else {
+		vars.Redis = redis
 	}
 }

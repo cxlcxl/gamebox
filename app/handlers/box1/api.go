@@ -1,7 +1,9 @@
 package box1
 
 import (
+	"gigame.xyz/app/model"
 	"gigame.xyz/app/response"
+	"gigame.xyz/app/validators/v_data_01"
 	"gigame.xyz/app/vars"
 	"github.com/gin-gonic/gin"
 	"strings"
@@ -10,55 +12,54 @@ import (
 type Api struct{}
 
 func (h Api) Games(ctx *gin.Context) {
-	games := make(map[string][]*vars.Game)
-	for _, game := range vars.Games {
-		if game.Tag == vars.HotGame {
-			games[vars.HotGame] = append(games[vars.HotGame], game)
-		}
-		if game.Tag == vars.NewGame {
-			games[vars.NewGame] = append(games[vars.NewGame], game)
-		}
-		games["All"] = append(games["All"], game)
+	games, err := model.DbGame(vars.Mysql).FetchGamesByBox(vars.GameBox01)
+	if err != nil {
+		response.Fail(ctx)
+		return
 	}
-	response.Success(ctx, games)
+	_games := make(map[string][]*model.ListGame)
+	for _, game := range games {
+		if strings.Contains(game.Topics, vars.HotGame) {
+			_games[vars.HotGame] = append(_games[vars.HotGame], game)
+		}
+		if strings.Contains(game.Topics, vars.NewGame) {
+			_games[vars.NewGame] = append(_games[vars.NewGame], game)
+		}
+		_games["All"] = append(_games["All"], game)
+	}
+	response.Success(ctx, _games)
 }
 
 func (h Api) GameInfo(ctx *gin.Context) {
-	id := ctx.Query("gid")
-	var game *vars.Game
-	var showGames []*vars.Game
-	for _, g := range vars.Games {
-		if g.GameId == id {
-			game = g
-		}
-		if g.Tag == vars.HotGame && g.GameId != id {
-			showGames = append(showGames, g)
-		}
-	}
-
-	response.Success(ctx, gin.H{"game": game, "games": showGames})
-}
-
-func (h Api) GamePlay(ctx *gin.Context) {
 	gid := ctx.Param("gid")
-	var game *vars.Game
-	for _, g := range vars.Games {
-		if g.GameId == gid {
-			game = g
-			break
-		}
+	game, err := model.DbGame(vars.Mysql).FindGameById(vars.GameBox01, gid)
+	if err != nil {
+		response.Fail(ctx)
+		return
 	}
-
+	if desc, err := model.DbGameDesc(vars.Mysql).FindDescById(gid); err == nil {
+		game.Desc = desc.Desc
+	}
 	response.Success(ctx, game)
 }
 
 func (h Api) Search(ctx *gin.Context) {
 	k := ctx.Query("k")
-	var games []*vars.Game
-	for _, g := range vars.Games {
-		if strings.Contains(g.Name, k) {
-			games = append(games, g)
-		}
+	searchGames, err := model.DbGame(vars.Mysql).SearchGames(vars.GameBox01, strings.TrimSpace(k))
+	if err != nil {
+		response.Fail(ctx)
+		return
+	}
+
+	response.Success(ctx, searchGames)
+}
+
+func (h Api) Topic(ctx *gin.Context, p interface{}) {
+	params := p.(*v_data_01.VDataTopic)
+	games, err := model.DbGame(vars.Mysql).FindGamesByTag(vars.GameBox01, params.Topic)
+	if err != nil {
+		response.Fail(ctx)
+		return
 	}
 
 	response.Success(ctx, games)

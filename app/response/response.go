@@ -25,6 +25,15 @@ func Success(ctx *gin.Context, data interface{}) {
 	ctx.Abort()
 }
 
+func Fail(ctx *gin.Context) {
+	ctx.JSON(http.StatusOK, gin.H{
+		"code":    400,
+		"message": "system error",
+		"data":    nil,
+	})
+	ctx.Abort()
+}
+
 func AuthFail(ctx *gin.Context) {
 	ctx.JSON(http.StatusBadGateway, struct{}{})
 	ctx.Abort()

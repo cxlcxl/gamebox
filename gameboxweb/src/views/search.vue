@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <AdHorizontal AdSlot="search-horizontal" />
+    <DisplayAds AdSlot="search-horizontal" />
 
   </section>
 </template>
@@ -21,10 +21,10 @@ import { searchGames } from "@/utils/apis"
 import { useRoute } from "vue-router"
 import GameAdvance from "@/components/GameAdvance/index.vue"
 import SearchPage from "@/components/Search/index.vue"
-import AdHorizontal from "@/components/AdHorizontal/index.vue"
+import DisplayAds from "@/components/DisplayAds/index.vue"
 
 export default defineComponent({
-  components: { GameAdvance, SearchPage, AdHorizontal },
+  components: { GameAdvance, SearchPage, DisplayAds },
   setup() {
     const route = useRoute()
     const ds = reactive({
@@ -57,8 +57,8 @@ export default defineComponent({
   .empty {
     text-align: center;
     color: #606266;
-    height: 50px;
-    line-height: 50px;
+    height: 180px;
+    line-height: 180px;
     color: var(--danger);
     text-shadow: 0 1px 2px var(--danger);
   }

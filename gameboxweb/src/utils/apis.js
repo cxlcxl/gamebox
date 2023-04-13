@@ -1,5 +1,12 @@
 import req from "./request"
 
+export function adConfig() {
+  return req({
+    url: "/ad-config",
+    method: "get",
+  })
+}
+
 export function gameList() {
   return req({
     url: "/games",
@@ -7,15 +14,7 @@ export function gameList() {
   })
 }
 
-export function getGameInfo(params) {
-  return req({
-    url: "/game",
-    method: "get",
-    params,
-  })
-}
-
-export function getGameDetail(gid) {
+export function getGameInfo(gid) {
   return req({
     url: "/game/" + gid,
     method: "get",
@@ -25,6 +24,14 @@ export function getGameDetail(gid) {
 export function searchGames(params) {
   return req({
     url: "/search",
+    method: "get",
+    params,
+  })
+}
+
+export function topicGames(params) {
+  return req({
+    url: "/topic",
     method: "get",
     params,
   })

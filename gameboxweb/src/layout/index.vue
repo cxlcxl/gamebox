@@ -14,11 +14,14 @@
 
     <footer-page />
   </div>
+
+  <BannerAds />
 </template>
 
 <script setup>
 import SlideBar from "./slide-bar.vue"
 import FooterPage from "./footer.vue"
+import BannerAds from "@/components/BannerAds/index.vue"
 </script>
 
 <style>

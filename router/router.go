@@ -26,6 +26,7 @@ func Router() error {
 
 	g := r.Group("/api/box01", middleware.CheckAuth())
 	{
+		g.GET("/ad-config", (box1.Api{}).AdConfig)
 		g.GET("/games", (box1.Api{}).Games)
 		g.GET("/game/:gid", (box1.Api{}).GameInfo)
 		g.GET("/search", (box1.Api{}).Search)

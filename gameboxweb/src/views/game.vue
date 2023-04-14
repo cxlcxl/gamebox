@@ -3,7 +3,7 @@
 
   <section class="content-main-w3" id="home">
     <div class="logo-wthree text-center">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand">
         {{ds.game.name}}
       </a>
     </div>
@@ -28,9 +28,9 @@
               <span class="title">May Like</span>
               <span class="action"></span>
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-6 col-12 p-0 snap-img" v-for="item, idx in ds.games" :key="idx">
-              <GameAdvance :GameInfo="item" />
-            </div>
+
+            <GameAdvance :GameList="ds.games" />
+
           </div>
         </div>
       </div>

@@ -13,3 +13,7 @@ export function toastMsg(msg) {
     duration: 5000,
   }).showToast()
 }
+
+export function isGigame() {
+  return location.host.indexOf("gigame.xyz") !== -1
+}

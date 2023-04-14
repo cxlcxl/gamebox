@@ -11,6 +11,12 @@ import (
 
 type Api struct{}
 
+func (h Api) AdConfig(ctx *gin.Context) {
+	response.Success(ctx, gin.H{
+		"is_show": 1,
+	})
+}
+
 func (h Api) Games(ctx *gin.Context) {
 	games, err := model.DbGame(vars.Mysql).FetchGamesByBox(vars.GameBox01)
 	if err != nil {

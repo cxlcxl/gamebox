@@ -12,9 +12,7 @@
           </div>
         </template>
         <template v-else>
-          <div class="col-lg-4 col-md-4 col-sm-6 col-12 p-0 snap-img" v-for="item, idx in GameList" :key="idx">
-            <GameAdvance :GameInfo="item" v-if="idx <= 23" />
-          </div>
+          <GameAdvance :GameList="GameList" />
         </template>
       </div>
     </div>

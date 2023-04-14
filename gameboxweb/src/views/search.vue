@@ -4,9 +4,9 @@
     <div class="container-fluid gallery-lightbox my-2">
       <div class="row main-box">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12 p-0 u-may-like">Search Result</div>
-        <div class="col-lg-4 col-md-4 col-sm-6 col-12 p-0 snap-img" v-for="item,idx in ds.games" :key="idx">
-          <GameAdvance :GameInfo="item" />
-        </div>
+
+        <GameAdvance :GameList="ds.games" />
+
         <div class="empty" v-show="ds.games.length === 0">Query result is empty</div>
       </div>
     </div>
